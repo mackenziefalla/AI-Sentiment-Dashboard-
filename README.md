@@ -6,9 +6,8 @@ Responsible AI Sentiment Dashboard for class CAP 4630
 <img width="500" height="250" alt="image" src="https://github.com/user-attachments/assets/f55676d8-d356-4228-a92b-b2281a99985e" /> 
 
 ## Project Overview
-Our project will be shaped as an AI sentiment dashboard that will be able to analyze text and read the type of tone. For example, the system can classify whether a message is positive, negative, or neutral. While it may not always be perfect, the goal is to give users helpful insights into how their words may be interpreted. We also hope this tool encourages people to reflect on their feelings and maybe use it as a step toward making life a little more comfortable.  
-
-No personal data is stored on the platform. The AI dashboard only processes the text the user provides, generates the sentiment result, and displays it with an emoji. The system takes pride in its privacy services and we plan to make sure no user's information is able to get leaked.  
+The AI Sentiment Dashboard is a web application that analyzes text and classifies it as positive, negative, or neutral. Users can input text, and the system will return both a sentiment label and probability scores to show how confident the model is. An emoji is also displayed alongside the result for easy interpretation.
+This project was developed as part of a class assignment at Florida Atlantic University to explore Responsible AI, machine learning deployment, and transparent design practices.
 
 ## Features
 
