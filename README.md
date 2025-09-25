@@ -5,21 +5,21 @@ By: Sophia Camacho, Mackenzie Falla, Christopher Piedra, Matthew White, Matthew 
 
 <img width="500" height="250" alt="image" src="https://github.com/user-attachments/assets/f55676d8-d356-4228-a92b-b2281a99985e" /> 
 
-##Project Overview
+## Project Overview
 
 
-##Features
+## Features
 
 
-##Responsible AI & Transparency
+## Responsible AI & Transparency
 
-##Technical Stack
+## Technical Stack
 
-##Installation & Usage
+## Installation & Usage
 
-##Future Improvements
+## Future Improvements
 
-##Contributors 
+## Contributors 
 
 Machine Learning Lead – Christopher Piedra
 Backend Developer – Matthew White
