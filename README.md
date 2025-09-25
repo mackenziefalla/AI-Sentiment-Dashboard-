@@ -22,7 +22,11 @@ By: Sophia Camacho, Mackenzie Falla, Christopher Piedra, Matthew White, Matthew 
 ## Contributors 
 
 Machine Learning Lead – Christopher Piedra
+
 Backend Developer – Matthew White
+
 Frontend Developer – Matthew Wyatt
+
 Data Engineer – Sophia Camacho
+
 Responsible AI & Documentation Lead / PM – Mackenzie Falla
