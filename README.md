@@ -13,7 +13,7 @@ By: Sophia Camacho, Mackenzie Falla, Christopher Piedra, Matthew White, Matthew 
 
 ## Responsible AI & Transparency
     Our project will be shaped as an AI sentiment dashboard that will be able to analyze text and read the type of tone. For example, the system can classify whether a message is positive, negative, or neutral. While it may not always be perfect, the goal is to give users helpful insights into how their words may be interpreted. We also hope this tool encourages people to reflect on their feelings and maybe use it as a step toward making life a little more comfortable.
-  	No personal data is stored on the platform. The AI dashboard only processes the text the user provides, generates the sentiment result, and displays it with an emoji. The system takes pride in its privacy services and we plan to make sure no user's information is able to get leaked. 
+    No personal data is stored on the platform. The AI dashboard only processes the text the user provides, generates the sentiment result, and displays it with an emoji. The system takes pride in its privacy services and we plan to make sure no user's information is able to get leaked. 
 We have recognized that this model does have its limitations. The ones I see moving forward are the struggle with sarcasm, slang or even cultural context. It also does not suggest ways to improve mood or provide personalized recommendations due to data storage. That would potentially be the new features that our team would be considered for future versions, but for now the focus is on building a safe, private, and transparent tool that highlights how AI can be used responsibly in everyday life.
 
 ## Technical Stack
