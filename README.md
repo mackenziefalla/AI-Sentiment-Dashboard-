@@ -7,6 +7,7 @@ Responsible AI Sentiment Dashboard for class CAP 4630
 
 ## Project Overview
 The AI Sentiment Dashboard is a web application that analyzes text and classifies it as positive, negative, or neutral. Users can input text, and the system will return both a sentiment label and probability scores to show how confident the model is. An emoji is also displayed alongside the result for easy interpretation.
+
 This project was developed as part of a class assignment at Florida Atlantic University to explore Responsible AI, machine learning deployment, and transparent design practices.
 
 ## Features
@@ -38,6 +39,7 @@ This makes the system more transparent and helps users interpret outputs respons
 
 ## Future Improvements
 -Multilanguage support.
+
 -Improve handling sarcasm and mixed emotions.
 
 ## Contributors 
