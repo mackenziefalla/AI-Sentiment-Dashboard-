@@ -16,17 +16,17 @@ No personal data is stored on the platform. The AI dashboard only processes the 
 ## Responsible AI 
 We designed this project with responsible AI principles in mind:
 
--Biases
+-Biases :
 The model may reflect biases from its training data, especially around slang, cultural references, or underrepresented groups.
 
--Limitations
+-Limitations :
 Struggles with sarcasm, mixed emotions, or non-English text.
 Does not provide advice, mood exercises, or next steps at this stage.
 
--Data Privacy
+-Data Privacy :
 No personal information is stored. The text is only processed to generate the sentiment label, probabilities, and emoji before being discarded.
 
--Probabilities + Explanations for Transparency
+-Probabilities + Explanations for Transparency :
 Probabilities show the model’s confidence (e.g., Positive: 70%, Neutral: 20%, Negative: 10%).
 Explanations highlight which words/phrases influenced the result.
 This makes the system more transparent and helps users interpret outputs responsibly.
@@ -44,9 +44,13 @@ This makes the system more transparent and helps users interpret outputs respons
 ## Contributors 
 
 -Machine Learning Lead – Christopher Piedra
+
 -Backend Developer – Matthew White
+
 -Frontend Developer – Matthew Wyatt
+
 -Data Engineer – Sophia Camacho
+
 -Responsible AI & Documentation Lead / PM – Mackenzie Falla
 
 # ALL PREDICTIONS ARE PROBABILISTIC AND NOT DETERMINISTIC
