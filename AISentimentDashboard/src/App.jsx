@@ -2,21 +2,60 @@ import './App.css'
 import { useState } from 'react'
 
 function App() {
+  const [input, setInput] = useState("")
+  const [sentiment, setSentiment] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-    const [input, setInput] = useState("")
-    const diagnoseSentence = () => {
-        console.log("Diagnosing sentiment: " + input)
+  const diagnoseSentence = async () => {
+    if (!input.trim()) {
+      alert("Please enter a sentence first!")
+      return
     }
-    return (
-        <>
-            <h1>AI Sentiment Dashboard</h1>
-            <p>{"Subject to change -> The AI Sentiment Dashboard will take any sentence as an input, and predict the sentiment behind it. Were you happy, sad, angry, who knows? The AI Sentiment Dashboard does. Probably."}</p>
-            <div>
-                <input type='text' placeholder='How are you feeling?' onChange={(e) => setInput(e.target.value)} />
-                <button onClick={ diagnoseSentence }>Diagnose</button>
-            </div>
-        </>
-    )
+
+    setLoading(true)
+    setSentiment(null)
+
+    // Simulate AI prediction (replace with actual fetch() later)
+    setTimeout(() => {
+      const moods = ["😊 Positive", "😐 Neutral", "😞 Negative", "😡 Angry", "😢 Sad"]
+      const randomMood = moods[Math.floor(Math.random() * moods.length)]
+      setSentiment(randomMood)
+      setLoading(false)
+    }, 1500)
+  }
+
+  return (
+    <div className="app-container">
+      <h1 className="title">AI Sentiment Dashboard</h1>
+
+      <p className="subtitle">
+        The AI Sentiment Dashboard analyzes how you feel — whether you're happy, sad, or somewhere in between.
+      </p>
+
+      <div className="input-section">
+        <input
+          type="text"
+          placeholder="Type how you're feeling..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="sentiment-input"
+        />
+        <button onClick={diagnoseSentence} className="diagnose-btn" disabled={loading}>
+          {loading ? "Analyzing..." : "Diagnose"}
+        </button>
+      </div>
+
+      {sentiment && (
+        <div className="result-card">
+          <h2>Result</h2>
+          <p className="sentiment-text">{sentiment}</p>
+        </div>
+      )}
+
+      <footer className="footer"> Powered by AI Sentiment Engine</footer>
+    </div>
+  )
 }
 
 export default App
+

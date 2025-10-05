@@ -3,19 +3,36 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background: linear-gradient(180deg, rgba(36, 36, 48, 1) 0%, rgba(18, 18, 25, 1) 100%);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
 }
 
 .logo {
   height: 6em;
   padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+  will-change: filter, transform;
+  transition: all 0.4s ease-in-out;
+  filter: drop-shadow(0 0 0.5em #646cff66);
 }
+
+
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 2em #8a8aff);
 }
+
+
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #61dafb);
+  transform: rotate(5deg) scale(1.05);
 }
 
 @keyframes logo-spin {
@@ -29,14 +46,159 @@
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+    animation: logo-spin infinite 18s linear;
   }
 }
 
 .card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
   padding: 2em;
+  color: #eaeaea;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.45);
+  border-color: rgba(100, 108, 255, 0.3);
 }
 
 .read-the-docs {
-  color: #888;
+  color: #aaa;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
 }
+
+.read-the-docs:hover {
+  color: #61dafb;
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 1.2rem;
+  }
+
+  .logo {
+    height: 4.5em;
+  }
+
+  .card {
+    padding: 1.5em;
+  }
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+  animation: fadeIn 0.6s ease-in;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #646cff, #00e0a4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  max-width: 600px;
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+.input-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.sentiment-input {
+  width: 280px;
+  padding: 0.8em 1em;
+  border-radius: 10px;
+  border: 1px solid #646cff;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.sentiment-input:focus {
+  outline: none;
+  border-color: #00e0a4;
+  box-shadow: 0 0 12px #00e0a4;
+}
+
+.diagnose-btn {
+  background: linear-gradient(135deg, #646cff, #00e0a4);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 0.8em 1.5em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.diagnose-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.3);
+}
+
+.diagnose-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.result-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1.5em 2em;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.sentiment-text {
+  font-size: 1.6rem;
+  margin-top: 0.5rem;
+  color: #00e0a4;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.footer {
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #aaa;
+  letter-spacing: 0.5px;
+}
+
+/* ✨ Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
