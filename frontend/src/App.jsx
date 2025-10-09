@@ -25,33 +25,14 @@ function App() {
             <h1 className="title">AI Sentiment Dashboard</h1>
 
             <p className="subtitle">
-            The AI Sentiment Dashboard analyzes how you feel — whether you're happy, sad, or somewhere in between.
+                The AI Sentiment Dashboard analyzes how you feel — whether you're happy, sad, or somewhere in between.
             </p>
 
             <div className="input-section">
-            <input
-                type="text"
-                placeholder="Type how you're feeling..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="sentiment-input"
-            />
-            <button onClick={diagnoseSentence} className="diagnose-btn" disabled={loading}>
-                {loading ? "Analyzing..." : "Diagnose"}
-            </button>
-            </div>
-
-            {sentiment && (
-            <div className="result-card">
-                <h2>Result</h2>
-                <p className="sentiment-text">{sentiment}</p>
-            </div>
-            )}
-
-            <footer className="footer"> Powered by AI Sentiment Engine</footer>
-        </div>
-    )
-}
-
-export default App
-
+                <input
+                    type="text"
+                    placeholder="Type how you're feeling..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    className="sentiment-input"
+                />
