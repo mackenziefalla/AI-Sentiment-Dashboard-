@@ -191,6 +191,27 @@
   letter-spacing: 0.5px;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1e1e1e;
+  color: #aaa;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0.8rem;
+  border-top: 1px solid #333;
+}
+
+.disclaimer {
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #888;
+}
+
+
 /* ✨ Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.97); }

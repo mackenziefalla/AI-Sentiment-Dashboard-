@@ -52,10 +52,17 @@ function App() {
         </div>
       )}
 
-      <footer className="footer"> Powered by AI Sentiment Engine</footer>
+      {/* ✅ Disclaimer + Footer */}
+      <footer className="footer">
+        <p className="disclaimer">
+          This app uses AI models to guess the sentiment of a user's text entries.
+          It is not always one hundred percent accurate. Do not plan to use this
+          dashboard for serious decisions; we built this for AI demonstration.
+        </p>
+        <p>Powered by AI Sentiment Engine</p>
+      </footer>
     </div>
   )
 }
 
 export default App
-
