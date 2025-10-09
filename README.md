@@ -70,21 +70,26 @@ uvicorn main:app --reload
 
 
 
-## Future Improvements
--Multilanguage support.
 
--Improve handling sarcasm and mixed emotions.
+### Explanation:
+1. **User enters text** on the dashboard (React UI).  
+2. The frontend sends the input via **Axios** to the **FastAPI backend**.  
+3. The backend runs the text through the **RoBERTa sentiment model**.  
+4. The model outputs **probabilities** for positive, negative, and neutral.  
+5. The **frontend displays** the sentiment label, emoji, and confidence score.
+
+---
 
 ## Contributors 
+- **Machine Learning Lead –** Christopher Piedra  
+- **Backend Developer –** Matthew White  
+- **Frontend Developer –** Matthew Wyatt  
+- **Data Engineer –** Sophia Camacho  
+- **Responsible AI & Documentation Lead / PM –** Mackenzie Falla  
 
--Machine Learning Lead – Christopher Piedra
+---
 
--Backend Developer – Matthew White
+# ⚠️ ALL PREDICTIONS ARE PROBABILISTIC AND NOT DETERMINISTIC
+> No personal data is stored.  
+> Predictions are generated locally and are for educational use only under **FAU’s CAP 4630 – Artificial Intelligence**.
 
--Frontend Developer – Matthew Wyatt
-
--Data Engineer – Sophia Camacho
-
--Responsible AI & Documentation Lead / PM – Mackenzie Falla
-
-# ALL PREDICTIONS ARE PROBABILISTIC AND NOT DETERMINISTIC
