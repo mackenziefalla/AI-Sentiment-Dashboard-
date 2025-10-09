@@ -1,40 +1,73 @@
 # AI-Sentiment-Dashboard
-Responsible AI Sentiment Dashboard for class CAP 4630
-
-
+Responsible AI Sentiment Dashboard for Florida Atlantic University - CAP 4630
 
 <img width="500" height="250" alt="image" src="https://github.com/user-attachments/assets/f55676d8-d356-4228-a92b-b2281a99985e" /> 
 
-## Project Overview
-The AI Sentiment Dashboard is a web application that analyzes text and classifies it as positive, negative, or neutral. Users can input text, and the system will return both a sentiment label and probability scores to show how confident the model is. An emoji is also displayed alongside the result for easy interpretation.
+---
 
-This project was developed as part of a class assignment at Florida Atlantic University to explore Responsible AI, machine learning deployment, and transparent design practices.
+## Project Overview
+The **AI Sentiment Dashboard** is a web-based tool that analyzes user-entered text and classifies it as **Positive**, **Negative**, or **Neutral**.
+
+Users can type any message into the text box and click **Analyze**.  
+The dashboard instantly displays:
+
+- The **predicted sentiment** (e.g., 😊 Positive / 😐 Neutral / ☹️ Negative)  
+- **Probability scores** showing model confidence  
+- A brief **Responsible AI notice** reminding users that predictions are educational, probabilistic, and privacy-safe  
+
+This project was built for **Florida Atlantic University’s CAP 4630 – Artificial Intelligence** course to demonstrate *responsible AI principles*, *machine-learning inference*, and *transparent design*.
+
+---
 
 ## Features
 
+### 🎯 Core Functionality
+- Real-time text sentiment analysis
+- Emoji-based result visualization
+- Probability breakdown (e.g., Positive 70%, Neutral 20%, Negative 10%)
+- FastAPI backend and interactive React frontend
+- Lightweight and privacy-safe — no data storage
 
-## Responsible AI 
-We designed this project with responsible AI principles in mind:
+---
 
--Biases :
-The model may reflect biases from its training data, especially around slang, cultural references, or underrepresented groups.
+## 🤖 Responsible AI
+We designed this project with **Responsible AI** principles in mind:
 
--Limitations :
-Struggles with sarcasm, mixed emotions, or non-English text.
-Does not provide advice, mood exercises, or next steps at this stage.
+- **Biases:**  
+  The model may reflect biases from its training data, especially around slang, cultural references, or underrepresented groups.
 
--Data Privacy :
-No personal information is stored. The text is only processed to generate the sentiment label, probabilities, and emoji before being discarded.
+- **Limitations:**  
+  Struggles with sarcasm, mixed emotions, or non-English text.  
+  Does not provide advice, mood exercises, or next steps at this stage.
 
--Probabilities + Explanations for Transparency :
-Probabilities show the model’s confidence (e.g., Positive: 70%, Neutral: 20%, Negative: 10%).
-Explanations highlight which words/phrases influenced the result.
-This makes the system more transparent and helps users interpret outputs responsibly.
+- **Data Privacy:**  
+  No personal information is stored. The text is only processed to generate the sentiment label, probabilities, and emoji before being discarded.
 
-## Technical Stack
--Model: Hugging Face RoBERTa
+- **Probabilities + Transparency:**  
+  Probabilities show the model’s confidence (e.g., Positive: 70%, Neutral: 20%, Negative: 10%).  
+  This makes the system more transparent and helps users interpret outputs responsibly.
 
-## Installation & Usage
+---
+
+## 🧰 Technical Stack
+- **Frontend:** React + Vite + Axios  
+- **Backend:** FastAPI (Python)  
+- **Model:** Hugging Face *RoBERTa* (cardiffnlp/twitter-roberta-base-sentiment)  
+- **Libraries:** PyTorch, Transformers, Uvicorn  
+- **Environment:** Local / Cloud prototype  
+
+---
+
+## ⚙️ Installation & Usage
+
+### Backend
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --reload
+
 
 
 ## Future Improvements
