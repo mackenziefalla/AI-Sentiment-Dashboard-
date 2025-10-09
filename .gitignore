@@ -424,3 +424,7 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+
+venv/
+backend/venv/
