@@ -6,9 +6,8 @@ from evaluate import analyze_prompt
 app = FastAPI()
 
 app.add_middleware(
-    #allowing everything until app is hosted
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # allows frontend to talk to backend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
