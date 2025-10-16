@@ -91,6 +91,7 @@ The AI Sentiment Dashboard follows a simple and transparent architecture consist
      - Probability scores (e.g., Positive 72%, Neutral 18%, Negative 10%)  
      - A brief Responsible AI notice about data privacy and interpretability.  
 
+## Contributors 
 
 ## Flow Summary 
 1. User enters text on the dashboard
@@ -118,3 +119,4 @@ The AI Sentiment Dashboard follows a simple and transparent architecture consist
 > No personal data is stored.  
 > Predictions are generated locally and are for educational use only under **FAU’s CAP 4630 – Artificial Intelligence**.
 
+# ALL PREDICTIONS ARE PROBABILISTIC AND NOT DETERMINISTIC
