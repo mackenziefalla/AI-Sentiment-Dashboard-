@@ -191,6 +191,23 @@
   letter-spacing: 0.5px;
 }
 
+.footer {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #333;
+  text-align: center;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.disclaimer {
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #888;
+}
+
+
 /* ✨ Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.97); }
