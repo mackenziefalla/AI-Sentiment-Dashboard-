@@ -8,8 +8,9 @@ export async function analyzeText(text) {
   if (!response.ok) {
     console.error("Backend error:", response.status, await response.text());
     throw new Error("Error analyzing text");
-  }
+    }
 
-  const data = await response.json();
+    const data = await response.json();
+  console.log(data)
   return data;
 }
