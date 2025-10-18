@@ -1,5 +1,3 @@
-# AI-Sentiment-Dashboard-
-
 # 🧠 AI-Sentiment-Dashboard
 **Responsible AI Sentiment Dashboard for Florida Atlantic University **
 
