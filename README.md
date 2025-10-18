@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+# AI-Sentiment-Dashboard-
+Responsible AI Sentiment Dashboard for class CAP 4630
+=======
+=======
+>>>>>>> 2b8dd8bd2201b0927f2215c0c549152c90aff38d
 # 🧠 AI-Sentiment-Dashboard
 **Responsible AI Sentiment Dashboard for Florida Atlantic University – CAP 4630**
 
@@ -119,4 +126,8 @@ The AI Sentiment Dashboard follows a simple and transparent architecture consist
 > No personal data is stored.  
 > Predictions are generated locally and are for educational use only under **FAU’s CAP 4630 – Artificial Intelligence**.
 
+<<<<<<< HEAD
+>>>>>>> 902ac5ce415ed4ed867987ddafb4fb52e018c23e
+=======
 # ALL PREDICTIONS ARE PROBABILISTIC AND NOT DETERMINISTIC
+>>>>>>> 2b8dd8bd2201b0927f2215c0c549152c90aff38d
