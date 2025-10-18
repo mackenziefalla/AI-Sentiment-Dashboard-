@@ -1,8 +1,7 @@
 # AI-Sentiment-Dashboard-
-Responsible AI Sentiment Dashboard for class CAP 4630
 
 # 🧠 AI-Sentiment-Dashboard
-**Responsible AI Sentiment Dashboard for Florida Atlantic University – CAP 4630**
+**Responsible AI Sentiment Dashboard for Florida Atlantic University **
 
 ---
 
