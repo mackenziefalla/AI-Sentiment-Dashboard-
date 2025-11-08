@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { analyzeText } from "./api"; // ✅ correct import
+import { analyzeText } from "./api";
 
 
 const emojiMap = {
@@ -15,6 +15,7 @@ function App() {
     const [loading, setLoading] = useState(false);
 
     const diagnoseSentence = async () => {
+        //if the input is empty, don't call the api
         if (!input.trim()) {
             alert("Please enter a sentence first!");
             return;
@@ -24,7 +25,7 @@ function App() {
         setData({});
 
         try {
-            // ✅ use new backend call
+            //retrieve sentiment analysis from api call
             const data = await analyzeText(input);
             setData(data || {});
         } catch (error) {
