@@ -1,6 +1,8 @@
 # 🧠 AI-Sentiment-Dashboard
 **Responsible AI Sentiment Dashboard for Florida Atlantic University **
 
+Link for Powerpoint: https://1drv.ms/p/c/6c383511022771d7/EW9zlOjly_RIvPyB5oOc7LgB9Kawy8fz8QU_1W5IMGtXVQ
+
 ---
 
 <img width="500" height="250" alt="AI Sentiment Dashboard Screenshot" src="https://github.com/user-attachments/assets/f55676d8-d356-4228-a92b-b2281a99985e" />
