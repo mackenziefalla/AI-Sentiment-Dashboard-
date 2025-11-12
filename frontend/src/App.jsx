@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { analyzeText } from "./api"; // ✅ correct import
+import { analyzeText } from "./api"; 
 
 
 const emojiMap = {
