@@ -1,6 +1,8 @@
 # 🧠 AI-Sentiment-Dashboard
 **Responsible AI Sentiment Dashboard for Florida Atlantic University **
 
+Link for Powerpoint: https://1drv.ms/p/c/6c383511022771d7/EW9zlOjly_RIvPyB5oOc7LgB9Kawy8fz8QU_1W5IMGtXVQ
+
 ---
 
 <img width="500" height="250" alt="AI Sentiment Dashboard Screenshot" src="https://github.com/user-attachments/assets/f55676d8-d356-4228-a92b-b2281a99985e" />
@@ -65,12 +67,22 @@ This helps users interpret outputs responsibly and understand uncertainty.
 ---
 
 ## Installation & Usage
+Frontend:  
+Run the following commands in terminal  
+`cd frontend`  
+`npm install` to install frontend dependencies. (Everything is listed in package.json)  
+`npm run dev` to launch the app  
 
+Backend:  
+Run the following commands in terminal  
+`cd backend`  
+`pip install -r requirements.txt`  to install python requirements. (All requirements are listed in Requirements.txt)   
+`uvicorn app:app --reload --port 8000`  to launch FastAPI backend. Any port can be used that is avaliable.  
 ## System Architecture
 
 The AI Sentiment Dashboard follows a simple and transparent architecture consisting of three core layers:
 
-1. **Frontend (React + Vite)**  
+1. **Frontend (React)**  
    - Handles user input through a web interface.  
    - Sends the text to the backend using Axios.  
    - Displays the sentiment label, emoji, and confidence scores returned from the backend.  
@@ -89,7 +101,7 @@ The AI Sentiment Dashboard follows a simple and transparent architecture consist
    - The frontend updates the UI with:  
      - The predicted sentiment (😊 / 😐 / ☹️)  
      - Probability scores (e.g., Positive 72%, Neutral 18%, Negative 10%)  
-     - A brief Responsible AI notice about data privacy and interpretability.  
+     - A brief Responsible AI notice about data privacy and interpretability.
 
 ## Flow Summary 
 1. User enters text on the dashboard
@@ -109,7 +121,9 @@ The AI Sentiment Dashboard follows a simple and transparent architecture consist
 - **Backend Developer –** Matthew White  
 - **Frontend Developer –** Matthew Wyatt  
 - **Data Engineer –** Sophia Camacho  
-- **Responsible AI & Documentation Lead / PM –** Mackenzie Falla  
+- **Responsible AI & Documentation Lead / PM –** Mackenzie Falla
+
+
 
 ---
 

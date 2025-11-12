@@ -1,4 +1,4 @@
-﻿from fastapi import FastAPI
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import torch
@@ -119,5 +119,4 @@ def analyze_prompt(request: TextRequest):
             "results": results
         }
     except Exception as e:
-        print("❌ ERROR:", e)
         return {"error": str(e)}
