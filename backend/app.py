@@ -8,28 +8,39 @@ import spacy
 
 app = FastAPI()
 
-# Add CORS Policy MiddleWare
+# -------------------------------------------------------
+# 🛡️ CORS Middleware (allow everything while developing)
+# -------------------------------------------------------
 app.add_middleware(
-    #allowing everything until app is hosted
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # You can restrict this later to your frontend domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-#Larger model but more accurate - en_core_web_trf vs en_core_web_sm
+# -------------------------------------------------------
+# 🧠 Load Models
+# -------------------------------------------------------
+# SpaCy for linguistic parsing (aspect extraction)
 nlp = spacy.load("en_core_web_trf")
+
+# Transformer model for Aspect-Based Sentiment Analysis (ABSA)
 model_name = "yangheng/deberta-v3-base-absa-v1.1"
 absa_tokenizer = AutoTokenizer.from_pretrained(model_name)
 absa_model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
+# -------------------------------------------------------
+# 📦 Request Model
+# -------------------------------------------------------
 class TextRequest(BaseModel):
     text: str
 
-    
+
+# -------------------------------------------------------
+# 🧩 Helper Function: Extract aspect-level sentences
+# -------------------------------------------------------
 def extract_aspect_sentences(text: str):
-    #Split prompt into aspects using spacy
     doc = nlp(text)
     aspects = []
     seen = set()
@@ -62,7 +73,7 @@ def extract_aspect_sentences(text: str):
                     start_i = sent.start
                     end_i = sent.end - 1
 
-            span_text = doc[start_i : end_i + 1].text.strip()
+            span_text = doc[start_i: end_i + 1].text.strip()
 
             if len(span_text.split()) < 2:
                 continue
@@ -81,6 +92,10 @@ def extract_aspect_sentences(text: str):
 
     return aspects
 
+
+# -------------------------------------------------------
+# 🚀 API Route: Analyze Sentiment
+# -------------------------------------------------------
 @app.post("/api/analyze")
 def analyze_prompt(request: TextRequest):
     prompt = request.text.strip()
@@ -88,7 +103,9 @@ def analyze_prompt(request: TextRequest):
         aspects = extract_aspect_sentences(prompt)
         results = []
 
-        #Analyze each aspect and append its result to results
+        label_map = {0: "Negative", 1: "Neutral", 2: "Positive"}
+
+        # Analyze each aspect individually
         for aspect in aspects:
             inputs = absa_tokenizer(aspect, return_tensors="pt", truncation=True)
             with torch.no_grad():
@@ -96,27 +113,48 @@ def analyze_prompt(request: TextRequest):
                 probs = F.softmax(outputs.logits, dim=1)[0]
                 pred_label = torch.argmax(probs).item()
 
-            label_map = {0: "Negative", 1: "Neutral", 2: "Positive"}
             sentiment = label_map.get(pred_label, "Unknown")
-            results.append({"aspect": aspect, "sentiment": sentiment, "score": "%.2f" % probs[pred_label].item()})
+            score = probs[pred_label].item()
+            results.append({
+                "aspect": aspect,
+                "sentiment": sentiment,
+                "score": round(score, 2)
+            })
 
-        #Analyse entire sentence using ASBA model and append it as overall aspect
-        inputs = absa_tokenizer(prompt, return_tensors="pt", truncation=True)
-        with torch.no_grad():
-            outputs = absa_model(**inputs)
-            probs = F.softmax(outputs.logits, dim=1)[0]
-            pred_label = torch.argmax(probs).item()
+        # --- Compute weighted overall sentiment from aspects ---
+        if results:
+            weights = {"Positive": 1, "Neutral": 0, "Negative": -1}
+            weighted_scores = [weights[r["sentiment"]] * r["score"] for r in results]
+            avg_score = sum(weighted_scores) / len(weighted_scores)
 
-        overall_sentiment_pred = label_map.get(pred_label, "Unknown")
-        confidence = probs[pred_label].item()
+            # interpret average sentiment
+            if avg_score > 0.2:
+                overall_sentiment = "Positive"
+            elif avg_score < -0.2:
+                overall_sentiment = "Negative"
+            else:
+                overall_sentiment = "Neutral"
+
+            overall_confidence = abs(avg_score)
+        else:
+            # fallback: analyze full text if no aspects found
+            inputs = absa_tokenizer(prompt, return_tensors="pt", truncation=True)
+            with torch.no_grad():
+                outputs = absa_model(**inputs)
+                probs = F.softmax(outputs.logits, dim=1)[0]
+                pred_label = torch.argmax(probs).item()
+
+            overall_sentiment = label_map.get(pred_label, "Unknown")
+            overall_confidence = probs[pred_label].item()
 
         return {
             "text": prompt,
             "overall": {
-                "sentiment": overall_sentiment_pred,
-                "score": "%.2f" % confidence,
+                "sentiment": overall_sentiment,
+                "score": round(overall_confidence, 2)
             },
             "results": results
         }
+
     except Exception as e:
         return {"error": str(e)}
