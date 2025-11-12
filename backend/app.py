@@ -5,15 +5,16 @@ import torch
 import torch.nn.functional as F
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import spacy
+import re
 
 app = FastAPI()
 
 # -------------------------------------------------------
-# 🛡️ CORS Middleware (allow everything while developing)
+# 🛡️ CORS Middleware
 # -------------------------------------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # You can restrict this later to your frontend domain
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,10 +23,8 @@ app.add_middleware(
 # -------------------------------------------------------
 # 🧠 Load Models
 # -------------------------------------------------------
-# SpaCy for linguistic parsing (aspect extraction)
 nlp = spacy.load("en_core_web_trf")
 
-# Transformer model for Aspect-Based Sentiment Analysis (ABSA)
 model_name = "yangheng/deberta-v3-base-absa-v1.1"
 absa_tokenizer = AutoTokenizer.from_pretrained(model_name)
 absa_model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -38,57 +37,35 @@ class TextRequest(BaseModel):
 
 
 # -------------------------------------------------------
-# 🧩 Helper Function: Extract aspect-level sentences
+# 🧩 Aspect Extraction (Contrast-Aware)
 # -------------------------------------------------------
 def extract_aspect_sentences(text: str):
+    """
+    Extracts key aspect phrases. Splits compound sentences
+    on contrast words like 'but', 'however', 'although', etc.
+    """
     doc = nlp(text)
-    aspects = []
-    seen = set()
+    aspects = [sent.text.strip() for sent in doc.sents if len(sent.text.strip().split()) > 2]
 
-    for sent in doc.sents:
-        sent_candidates = []
+    # Step 2: Manual split for contrast words if SpaCy only finds one part
+    if len(aspects) <= 1:
+        contrast_words = ["but", "however", "although", "though", "yet"]
+        pattern = r"\b(" + "|".join(contrast_words) + r")\b"
+        parts = re.split(pattern, text, flags=re.IGNORECASE)
 
-        for chunk in sent.noun_chunks:
-            ancestor = chunk.root
-            verb = None
-            while ancestor.head != ancestor and ancestor.head in sent:
-                ancestor = ancestor.head
-                if ancestor.pos_ in {"VERB", "AUX", "ADJ"}:
-                    verb = ancestor
-                    break
-
-            if verb is not None:
-                start_i = min(chunk.root.left_edge.i, verb.left_edge.i)
-                end_i = max(chunk.root.right_edge.i, verb.right_edge.i)
+        merged = []
+        buffer = ""
+        for part in parts:
+            if part.strip().lower() in contrast_words:
+                if buffer.strip():
+                    merged.append(buffer.strip())
+                buffer = part
             else:
-                amod = None
-                for child in chunk.root.children:
-                    if child.dep_ == "amod":
-                        amod = child
-                        break
-                if amod is not None:
-                    start_i = chunk.root.left_edge.i
-                    end_i = amod.right_edge.i
-                else:
-                    start_i = sent.start
-                    end_i = sent.end - 1
+                buffer += " " + part
+        if buffer.strip():
+            merged.append(buffer.strip())
 
-            span_text = doc[start_i: end_i + 1].text.strip()
-
-            if len(span_text.split()) < 2:
-                continue
-
-            if span_text not in seen:
-                seen.add(span_text)
-                sent_candidates.append(span_text)
-
-        if not sent_candidates:
-            s = sent.text.strip()
-            if len(s.split()) >= 2 and s not in seen:
-                seen.add(s)
-                aspects.append(s)
-        else:
-            aspects.extend(sent_candidates)
+        aspects = [p.strip() for p in merged if len(p.strip().split()) > 2]
 
     return aspects
 
@@ -101,11 +78,19 @@ def analyze_prompt(request: TextRequest):
     prompt = request.text.strip()
     try:
         aspects = extract_aspect_sentences(prompt)
-        results = []
+        print("🔍 Extracted aspects:", aspects)
 
         label_map = {0: "Negative", 1: "Neutral", 2: "Positive"}
+        negative_keywords = {
+            "not", "no", "scared", "fear", "afraid", "worried",
+            "hate", "alergic", "allergic", "sick", "ill",
+            "anxious", "nervous", "concerned", "upset"
+        }
 
-        # Analyze each aspect individually
+        results = []
+        grouped = {"Positive": [], "Negative": [], "Neutral": []}
+
+        # Analyze each extracted aspect
         for aspect in aspects:
             inputs = absa_tokenizer(aspect, return_tensors="pt", truncation=True)
             with torch.no_grad():
@@ -115,44 +100,69 @@ def analyze_prompt(request: TextRequest):
 
             sentiment = label_map.get(pred_label, "Unknown")
             score = probs[pred_label].item()
-            results.append({
+
+            # Adjust for negative-emotion keywords
+            if any(word in aspect.lower() for word in negative_keywords) and sentiment == "Positive":
+                sentiment = "Negative"
+                score = min(score + 0.1, 1.0)
+
+            entry = {
                 "aspect": aspect,
                 "sentiment": sentiment,
                 "score": round(score, 2)
-            })
+            }
+            results.append(entry)
+            if sentiment in grouped:
+                grouped[sentiment].append(entry)
 
-        # --- Compute weighted overall sentiment from aspects ---
+        # --- Compute weighted overall sentiment ---
         if results:
             weights = {"Positive": 1, "Neutral": 0, "Negative": -1}
             weighted_scores = [weights[r["sentiment"]] * r["score"] for r in results]
             avg_score = sum(weighted_scores) / len(weighted_scores)
 
-            # interpret average sentiment
-            if avg_score > 0.2:
+            pos_count = len([r for r in results if r["sentiment"] == "Positive"])
+            neg_count = len([r for r in results if r["sentiment"] == "Negative"])
+            neu_count = len([r for r in results if r["sentiment"] == "Neutral"])
+
+            # ✅ True balance for mixed emotions
+            if pos_count > 0 and neg_count > 0:
+                pos_strength = sum([r["score"] for r in results if r["sentiment"] == "Positive"]) / pos_count
+                neg_strength = sum([r["score"] for r in results if r["sentiment"] == "Negative"]) / neg_count
+
+                overall_sentiment = "Mixed"
+                overall_confidence = round(((pos_strength + neg_strength) / 2), 2)
+
+            elif avg_score > 0.2:
                 overall_sentiment = "Positive"
+                overall_confidence = round(avg_score, 2)
+
             elif avg_score < -0.2:
                 overall_sentiment = "Negative"
+                overall_confidence = round(abs(avg_score), 2)
+
             else:
                 overall_sentiment = "Neutral"
+                overall_confidence = round(abs(avg_score), 2)
 
-            overall_confidence = abs(avg_score)
         else:
-            # fallback: analyze full text if no aspects found
+            # Fallback: analyze whole prompt
             inputs = absa_tokenizer(prompt, return_tensors="pt", truncation=True)
             with torch.no_grad():
                 outputs = absa_model(**inputs)
                 probs = F.softmax(outputs.logits, dim=1)[0]
                 pred_label = torch.argmax(probs).item()
-
             overall_sentiment = label_map.get(pred_label, "Unknown")
             overall_confidence = probs[pred_label].item()
 
+        # ✅ Return structured response
         return {
             "text": prompt,
             "overall": {
                 "sentiment": overall_sentiment,
                 "score": round(overall_confidence, 2)
             },
+            "grouped": grouped,
             "results": results
         }
 
