@@ -67,7 +67,17 @@ This helps users interpret outputs responsibly and understand uncertainty.
 ---
 
 ## Installation & Usage
+Frontend:  
+Run the following commands in terminal  
+`cd frontend`  
+`npm install` to install frontend dependencies. (Everything is listed in package.json)  
+`npm run dev` to launch the app  
 
+Backend:  
+Run the following commands in terminal  
+`cd backend`  
+`pip install -r requirements.txt`  to install python requirements. (All requirements are listed in Requirements.txt)   
+`uvicorn app:app --reload --port 8000`  to launch FastAPI backend. Any port can be used that is avaliable.  
 ## System Architecture
 
 The AI Sentiment Dashboard follows a simple and transparent architecture consisting of three core layers:
