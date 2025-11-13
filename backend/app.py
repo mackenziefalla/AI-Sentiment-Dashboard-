@@ -9,18 +9,18 @@ import spacy
 app = FastAPI()
 
 # -------------------------------------------------------
-# CORS Middleware (allow everything while developing)
+# 🛡️ CORS Middleware (allow everything while developing)
 # -------------------------------------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # You can restrict this later to your frontend domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # -------------------------------------------------------
-# Load Models
+# 🧠 Load Models
 # -------------------------------------------------------
 # SpaCy for linguistic parsing (aspect extraction)
 nlp = spacy.load("en_core_web_trf")
@@ -31,14 +31,14 @@ absa_tokenizer = AutoTokenizer.from_pretrained(model_name)
 absa_model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
 # -------------------------------------------------------
-# Request Model
+# 📦 Request Model
 # -------------------------------------------------------
 class TextRequest(BaseModel):
     text: str
 
 
 # -------------------------------------------------------
-# Helper Function: Extract aspect-level sentences
+# 🧩 Helper Function: Extract aspect-level sentences
 # -------------------------------------------------------
 def extract_aspect_sentences(text: str):
     doc = nlp(text)
@@ -94,7 +94,7 @@ def extract_aspect_sentences(text: str):
 
 
 # -------------------------------------------------------
-# API Route: Analyze Sentiment
+# 🚀 API Route: Analyze Sentiment
 # -------------------------------------------------------
 @app.post("/api/analyze")
 def analyze_prompt(request: TextRequest):
