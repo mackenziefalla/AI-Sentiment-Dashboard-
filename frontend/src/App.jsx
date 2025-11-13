@@ -45,13 +45,12 @@ function App() {
             </p>
 
             <div className="input-section">
-                <input
-                    type="text"
+                <textarea
                     placeholder='Try: "The professor was great but the homework was awful."'
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     className="sentiment-input"
-                />
+                    />
                 <button onClick={diagnoseSentence} className="diagnose-btn" disabled={loading}>
                     {loading ? "Analyzing..." : "Analyze"}
                 </button>
